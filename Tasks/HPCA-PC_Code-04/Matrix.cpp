@@ -64,15 +64,15 @@ int main() {
 
   /// SIMD VECTORS
   TStopwatch timerSIMD;
-  for (int ii = 0; ii < NIter; ii++){
+  for (int ii = 0; ii < NIter; ii++) {
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j += 4) {
-      P4_F32vec4* vecA = reinterpret_cast<P4_F32vec4*>(a[i][j]);
-      P4_F32vec4* vecC = reinterpret_cast<P4_F32vec4*>(c_simd[i][j]);
-      *vecC = f(*vecA);
+        P4_F32vec4* vecA = reinterpret_cast<P4_F32vec4*>(&a[i][j]); 
+        P4_F32vec4* vecC = reinterpret_cast<P4_F32vec4*>(&c_simd[i][j]);
+        *vecC = f(*vecA);
       }
     }
-
+  }
   timerSIMD.Stop();
 
   double tScal = timerScalar.RealTime() * 1000;
