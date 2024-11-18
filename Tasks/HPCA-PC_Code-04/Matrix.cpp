@@ -67,8 +67,8 @@ int main() {
   for (int ii = 0; ii < NIter; ii++) {
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j += 4) {
-        F32vec4* vecA = reinterpret_cast<P4_F32vec4*>(&a[i][j]); 
-        F32vec4* vecC = reinterpret_cast<P4_F32vec4*>(&c_simd[i][j]);
+        F32vec4* vecA = reinterpret_cast<F32vec4*>(&a[i][j]); 
+        F32vec4* vecC = reinterpret_cast<F32vec4*>(&c_simd[i][j]);
         *vecC = f(*vecA);
       }
     }
