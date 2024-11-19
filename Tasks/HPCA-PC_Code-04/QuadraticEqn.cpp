@@ -84,9 +84,9 @@ int main()
         for (int i = 0; i < NVectors; i++) {
             ///__put your code here__
             /// copy coefficients b and c
-            __m128 bVec = __mm_load_ps(&b[i*fvecLen]);
-            __m128 cVec = __mm_load_ps(&c[i*fvecLen]);
-            __m128 aVec = __mm_load_ps(&a[i*fvecLen]);
+            __m128 bVec = _mm_load_ps(&b[i*fvecLen]);
+            __m128 cVec = _mm_load_ps(&c[i*fvecLen]);
+            __m128 aVec = _mm_load_ps(&a[i*fvecLen]);
             
 
             ///__put your code here__
