@@ -128,7 +128,7 @@ int main()
             __m128 detVec = _mm_sub_ps(bbVec, ac4Vec);
 
             __m128 sqrtSubBVec = _mm_sub_ps(_mm_sqrt_ps(detVec), *bVec);
-            xV = _mm_div_ps(sqrtSubBVec, _mm_mul_ps(_mm_set_ps1(2.0f), *aVec));
+            *xV = _mm_div_ps(sqrtSubBVec, _mm_mul_ps(_mm_set_ps1(2.0f), *aVec));
         }
     timerSIMD2.Stop();
 
