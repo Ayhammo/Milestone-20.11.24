@@ -84,13 +84,29 @@ int main()
         for (int i = 0; i < NVectors; i++) {
             ///__put your code here__
             /// copy coefficients b and c
+            __m128 bVec = __mm_load_ps(&b[i*fvecLen]);
+            __m128 cVec = __mm_load_ps(&c[i*fvecLen]);
+            __m128 aVec = __mm_load_ps(&a[i*fvecLen]);
+            
 
             ///__put your code here__
             /// put the code, which calculates the root
+            __m128 bbVec = _mm_mul_ps(bVec, bVec);
+            __m128 ac4Vec = _mm_mul_ps(_mm_set_ps1(4.0f), _mm_mul_ps(aVec, cVec));
+            __m128 detVec = _mm_sub_ps(bbVec, ac4Vec);
+
+            __m128 sqrtVec = _mm_sqrt_ps(detVec);
+            __m128 sqrtSubBVec = _mm_sub_ps(sqrtVec, bVec);
+            __m128 a2Vec = _mm_mul_ps(_mm_set_ps1(2.0f), aVec);
+            __m128 x_simd1 = _mm_div_ps(sqrtSubBVec, a2Vec);
+
+
 
             // copy output data
             //      for(int iE=0; iE<fvecLen; iE++)
             //        x_simd1[i*fvecLen+iE] = (reinterpret_cast<float*>(&xV))[iE];
+
+
         }
     timerSIMD.Stop();
 
@@ -100,9 +116,18 @@ int main()
         for (int i = 0; i < N; i += fvecLen) {
             ///__put your code here__
             /// cast coefficients b and c
+            __m128* bVec = reinterpret_cast<__m128*>(&b[i]);
+            __m128* cVec = reinterpret_cast<__m128*>(&c[i]);
+            __m128* aVec = reinterpret_cast<__m128*>(&a[i]); 
 
             ///__put your code here__
             /// put the code, which calculates the root
+            __m128 bbVec = _mm_mul_ps(*bVec, *bVec);
+            __m128 ac4Vec = _mm_mul_ps(_mm_set_ps1(4), _mm_mul_ps(*aVec, *cVec));
+            __m128 detVec = _mm_sub_ps(bbVec, ac4Vec);
+
+            __m128 sqrtSubBVec = _mm_sub_ps(_mm_sqrt_ps(detVec), *bVec);
+            __m128 x_simd2 = _mm_div_ps(sqrtSubBVec, _mm_mul_ps(_mm_set_ps1(2.0f), *aVec));
         }
     timerSIMD2.Stop();
 
@@ -113,9 +138,20 @@ int main()
             // copy input data
             ///__put your code here__
             /// copy coefficients b and c
+            F32vec4 bVec = F32vec4(&b[i*fvecLen]);
+            F32vec4 cVec = F32vec4(&c[i*fvecLen]);
+            F32vec4 aVec = F32vec4(&a[i*fvecLen]);
 
             ///__put your code here__
             /// put the code, which calculates the root
+            F32vec4 bbVec = bVec * bVec;
+            F32vec4 ac4Vec = 4.0f * aVec * cVec;
+            F32vec4 detVec = bbVec - ac4Vec;
+
+            F32vec4 sqrtVec = sqrt(detVec);
+            F32vec4 sqrtSubBVec = sqrtVec - bVec;
+            F32vec4 a2Vec = 2.0f * aVec;
+            F32vec4 x_simd3 = sqrtSubBVec / a2Vec;
 
             // copy output data
             //      for(int iE=0; iE<fvecLen; iE++)
@@ -130,9 +166,20 @@ int main()
         for (int i = 0; i < N; i += fvecLen) {
             ///__put your code here__
             /// cast coefficients b and c
+            F32vec4* bVec = reinterpret_cast<F32vec4*>(&b[i]);
+            F32vec4* cVec = reinterpret_cast<F32vec4*>(&c[i]);
+            F32vec4* aVec = reinterpret_cast<F32vec4*>(&a[i]);
 
             ///__put your code here__
             /// put the code, which calculates the root
+            F32vec4 bbVec = *bVec * *bVec;
+            F32vec4 ac4Vec = 4.0f * *aVec * *cVec;
+            F32vec4 detVec = bbVec - ac4Vec;
+
+            F32vec4 sqrtVec = sqrt(detVec);
+            F32vec4 sqrtSubBVec = sqrtVec - *bVec;
+            F32vec4 a2Vec = 2.0f * *aVec;
+            F32vec4 x_simd4 = sqrtSubBVec / a2Vec;
         }
     timerSIMD4.Stop();
 
