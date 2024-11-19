@@ -98,14 +98,14 @@ int main()
             __m128 sqrtVec = _mm_sqrt_ps(detVec);
             __m128 sqrtSubBVec = _mm_sub_ps(sqrtVec, bVec);
             __m128 a2Vec = _mm_mul_ps(_mm_set_ps1(2.0f), aVec);
-            __m128 x_simd1 = _mm_div_ps(sqrtSubBVec, a2Vec);
+            __m128 xVec = _mm_div_ps(sqrtSubBVec, a2Vec);
 
 
 
             // copy output data
             //      for(int iE=0; iE<fvecLen; iE++)
             //        x_simd1[i*fvecLen+iE] = (reinterpret_cast<float*>(&xV))[iE];
-
+            _mm_store_ps(&x_simd1[i*fvecLen], xVec);
 
         }
     timerSIMD.Stop();
@@ -127,7 +127,9 @@ int main()
             __m128 detVec = _mm_sub_ps(bbVec, ac4Vec);
 
             __m128 sqrtSubBVec = _mm_sub_ps(_mm_sqrt_ps(detVec), *bVec);
-            __m128 x_simd2 = _mm_div_ps(sqrtSubBVec, _mm_mul_ps(_mm_set_ps1(2.0f), *aVec));
+            __m128 xVec = _mm_div_ps(sqrtSubBVec, _mm_mul_ps(_mm_set_ps1(2.0f), *aVec));
+
+            _mm_store_ps(&x_simd2[i], xVec);
         }
     timerSIMD2.Stop();
 
@@ -151,11 +153,13 @@ int main()
             F32vec4 sqrtVec = sqrt(detVec);
             F32vec4 sqrtSubBVec = sqrtVec - bVec;
             F32vec4 a2Vec = 2.0f * aVec;
-            F32vec4 x_simd3 = sqrtSubBVec / a2Vec;
+            F32vec4 xVec = sqrtSubBVec / a2Vec;
 
             // copy output data
             //      for(int iE=0; iE<fvecLen; iE++)
             //        x_simd3[i*fvecLen+iE] = xV[iE];
+
+            _mm_store_ps(&x_simd3[i*fvecLen], xVec);
         }
     }
     timerSIMD3.Stop();
@@ -179,7 +183,9 @@ int main()
             F32vec4 sqrtVec = sqrt(detVec);
             F32vec4 sqrtSubBVec = sqrtVec - *bVec;
             F32vec4 a2Vec = 2.0f * *aVec;
-            F32vec4 x_simd4 = sqrtSubBVec / a2Vec;
+            F32vec4 xVec = sqrtSubBVec / a2Vec;
+
+            _mm_store_ps(&x_simd4[i], xVec);
         }
     timerSIMD4.Stop();
 
