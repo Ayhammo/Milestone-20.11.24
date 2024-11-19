@@ -138,9 +138,9 @@ int main()
             // copy input data
             ///__put your code here__
             /// copy coefficients b and c
-            F32vec4 bVec = F32vec4(&b[i*fvecLen]);
-            F32vec4 cVec = F32vec4(&c[i*fvecLen]);
-            F32vec4 aVec = F32vec4(&a[i*fvecLen]);
+            F32vec4 bVec(_mm_load_ps(&b[i*fvecLen]));
+            F32vec4 cVec(_mm_load_ps(&c[i*fvecLen]));
+            F32vec4 aVec(_mm_load_ps(&a[i*fvecLen]));
 
             ///__put your code here__
             /// put the code, which calculates the root
