@@ -91,16 +91,14 @@ int main()
 
             ///__put your code here__
             /// put the code, which calculates the root
-            //__m128 bbVec = _mm_mul_ps(bVec, bVec);
-            //__m128 ac4Vec = _mm_mul_ps(_mm_set_ps1(4.0f), _mm_mul_ps(aVec, cVec));
-            //__m128 detVec = _mm_sub_ps(bbVec, ac4Vec);
+            __m128 bbVec = _mm_mul_ps(bVec, bVec);
+            __m128 ac4Vec = _mm_mul_ps(_mm_set_ps1(4.0f), _mm_mul_ps(aVec, cVec));
+            __m128 detVec = _mm_sub_ps(bbVec, ac4Vec);
 
-            __m128 det = _mm_sub_ps(_mm_mul_ps(bVec, bVec), _mm_mul_ps(_mm_set_ps1(4.0f), _mm_mul_ps(aVec, cVec)));
-
-            //__m128 sqrtVec = _mm_sqrt_ps(detVec);
-            //__m128 sqrtSubBVec = _mm_sub_ps(sqrtVec, bVec);
-            //__m128 a2Vec = _mm_mul_ps(_mm_set_ps1(2.0f), aVec);
-            __m128 xV = _mm_div_ps(_mm_sub_ps(_mm_sqrt_ps(det), bVec), _mm_mul_ps(_mm_set_ps1(2.0f), aVec));
+            __m128 sqrtVec = _mm_sqrt_ps(detVec);
+            __m128 sqrtSubBVec = _mm_sub_ps(sqrtVec, bVec);
+            __m128 a2Vec = _mm_mul_ps(_mm_set_ps1(2.0f), aVec);
+            __m128 xV = _mm_div_ps(sqrtSubBVec, a2Vec);
 
 
 
