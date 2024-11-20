@@ -26,7 +26,7 @@ Authors: A. Mithran; I. Kulakov; M. Zyzak
 
 #include <stdlib.h> // rand
 
-static const int NVectors = 1000000;
+static const int NVectors = 10000000;
 static const int N = NVectors * fvecLen;
 
 static const int NIterOut = 1000;
