@@ -26,7 +26,7 @@ Authors: A. Mithran; I. Kulakov; M. Zyzak
 
 #include <stdlib.h> // rand
 
-static const int NVectors = 1000;
+static const int NVectors = 1000000;
 static const int N = NVectors * fvecLen;
 
 static const int NIterOut = 1000;
@@ -37,7 +37,7 @@ void CheckResults(const float* yScalar, const float* ySIMD, const int NSIMD)
     for (int i = 0; i < N; i++)
         if (fabs(yScalar[i] - ySIMD[i]) > yScalar[i] * 0.01) {
             ok = false;
-            //      std::cout << i<<" " << yScalar[i] << " " << ySIMD[i] << " " << fabs(yScalar[i] - ySIMD[i])<<std::endl;
+            std::cout << i<<" " << yScalar[i] << " " << ySIMD[i] << " " << fabs(yScalar[i] - ySIMD[i])<<std::endl;
         }
     if (!ok)
         std::cout << "ERROR! SIMD" << NSIMD
