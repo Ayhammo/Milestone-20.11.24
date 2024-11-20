@@ -54,7 +54,22 @@ int main()
     unsigned char sumV = 0;
 
     TStopwatch timerSIMD;
-    // TODO
+    timerSIMD.Start();
+    for (int i = 0: i < NIter; i++){
+        F32vec4 ssum(0.0f); //F43vec4 Initialize for 4 Float
+        float* sdata = reinterpret_cast<float*>(str); //str to float
+        int vcount = N/sizeof(F32vec4);//Count the Float Block
+        for (int i = 0; i < vcount; i++){ //Through the Blocks and save XOR to SIMD ssum
+            F32vec4 dataBlock(sdata[i]);
+            ssum = ssum ^ dataBlock;
+        }
+        float reduced[4];//4 Floats in SIMD to array reduced
+        ssum.store(reduced);
+        for (int j = 0; j < 4; j++){ //XOR to end result sumV
+            sumV ^= static_cast<unsigned char>(reduced[i]);
+        }
+        
+    }
     timerSIMD.Stop();
 
     /// SCALAR INTEGER
@@ -62,7 +77,16 @@ int main()
     unsigned char sumI = 0;
 
     TStopwatch timerINT;
-    // TODO
+    timerINT.Start();
+    for (int i = 0; i < NIter; i++){
+        unsigned int* idata = reinterpret_cast<unsigned int*>(str); //Transfer str to unsigned int array
+        int bcount = N/sizeof(unsigned int); //Count the Number of Blocks
+        unsigned int summ = 0;
+        for (int j = 0; j < bcount; j++){ //XOR Ops on Blocks
+            summ ^= data[i];
+        }
+        sumI = static_cast<unsigned char>(summ^(summ >> 8)^(summ >> 16)^(summ >> 24));//jede in 32bits XOR and get a one Byte Result
+    }
     timerINT.Stop();
 
     /// -- OUTPUT --
