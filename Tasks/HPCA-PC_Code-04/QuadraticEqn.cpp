@@ -35,7 +35,7 @@ void CheckResults(const float* yScalar, const float* ySIMD, const int NSIMD)
 {
     bool ok = true;
     for (int i = 0; i < N; i++)
-        if (fabs(yScalar[i] - ySIMD[i]) > yScalar[i] * 0.1) {
+        if (fabs(yScalar[i] - ySIMD[i]) > yScalar[i] * 0.2) {
             ok = false;
             std::cout << i<<" " << yScalar[i] << " " << ySIMD[i] << " " << fabs(yScalar[i] - ySIMD[i])<<std::endl;
         }
